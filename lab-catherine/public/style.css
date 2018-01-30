@@ -1,7 +1,30 @@
 body {
   background-color: darksalmon;
+  font-family: Baskerville;
 }
 
 form {
   display: inline;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+#messages {
+  border: 2px solid black;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+div {
+  padding: 5px;
+}
+
+#messages div:nth-child(even) {
+  background-color: #fff;
+}
+
+div:nth-child(odd) {
+  background-color: cornsilk;
 }

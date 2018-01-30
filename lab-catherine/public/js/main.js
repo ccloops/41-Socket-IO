@@ -15,7 +15,7 @@ usernameForm.addEventListener('submit', (event) => {
   } else {
     socket.emit('submit-username', {username});
     let header = document.getElementById('welcome');
-    header.textContent = 'Welcome: ' + username + '!';
+    header.textContent = 'Welcome: ' + username.toUpperCase() + '!';
   
   }
 });
@@ -29,14 +29,15 @@ sendMessageForm.addEventListener('submit', (event) => {
 
 socket.on('receive-message', (data) => {
   console.log('RECEIVED:', data);
+  let timestamp = new Date().toLocaleTimeString();
   let div = document.createElement('div');
-  let alias = data.username;
-  div.textContent = alias + ': ' + data.message;
+  let alias = data.username.toUpperCase();
+  div.textContent = timestamp + ' |    ' + alias + ':     ' + data.message;
   messagesContainer.appendChild(div);
 });
 
 socket.on('set-header', (data) => {
-  let alias = data.username;
+  let alias = data.username.toUpperCase();
   let header = document.getElementById('welcome');
   header.append('Welcome: ' + alias + '!');
 });
