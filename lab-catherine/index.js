@@ -13,9 +13,12 @@ io.on('connection', (socket) => {
   PLAYERS[socket.id].username = faker.fake('{{name.jobTitle}}');
   console.log(PLAYERS[socket.id].username);
 
+  socket.emit('set-header', {username: PLAYERS[socket.id].username});
+
+
   io.emit('playerdata', PLAYERS);
 
-  console.log('JOINED', socket.id);
+  console.log('JOINED', PLAYERS[socket.id].username);
 
   socket.on('disconnect', () => {
     console.log('LEFT', socket.id);
