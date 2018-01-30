@@ -3,12 +3,29 @@ body {
   font-family: Baskerville;
 }
 
-form {
-  display: inline;
+textarea {
+  width: 300px;
+  height: 100px;
+  background-color: lightPink;
+}
+
+input {
+  width: 100px;
+  background-color: lightPink;
 }
 
 h1 {
   font-size: 50px;
+}
+
+img {
+  object-fit: contain;
+  width: 50px;
+  height: 50px;
+}
+
+div {
+  padding: 5px;
 }
 
 #messages {
@@ -17,14 +34,45 @@ h1 {
   padding: 10px;
 }
 
-div {
-  padding: 5px;
-}
-
 #messages div:nth-child(even) {
   background-color: #fff;
 }
 
 div:nth-child(odd) {
   background-color: cornsilk;
+}
+
+.timestamp {
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+button {
+  background-color: lightblue;
+  color: darkSlateGray;
+  padding: 5px;  
+}
+
+button:hover {
+  background-color: darkslategray;
+  color: cornsilk;
+}
+
+#send-button {
+  background-color: darkslategray;
+  padding: 10px;
+  color: cornsilk;
+}
+
+#send-button:hover {
+  background-color: lightblue;
+  color: darkslategray;
+}
+
+#update-data {
+  text-align: right;
 }

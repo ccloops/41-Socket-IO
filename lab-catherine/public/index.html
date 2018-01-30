@@ -9,21 +9,29 @@
 </head>
 <body>
   <h1 id="welcome"></h1>
-  <p>chat chat chat</p>
+  <p>Start a chat below!</p>
 
+  <form id="message-form">
+    <textarea id="message-input"></textarea>
+    <button id="send-button" type="submit">send message</button>
+  </form>
+
+  <div id="update-data">
   <form id="username-form">
     <input id="username-input"/>
     <button type="submit">update username</button>
   </form>
 
-  <form id="message-form">
-    <input id="message-input"/>
-    <button type="submit">send message</button>
+  <form id="avatar-form">
+    <input id="avatar-input"/>
+    <button type="submit">update avatar</button>
   </form>
-
+  
+  </div>
 
   <div id="messages"></div>
 </body>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/js/models/chat-message.js"></script>
 <script src="/js/main.js"></script>
 </html>

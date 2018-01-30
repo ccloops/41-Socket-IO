@@ -1,9 +1,12 @@
+'use strict';
+
 const socket = io();
 
 const sendMessageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
 const messagesContainer = document.getElementById('messages');
 const usernameForm = document.getElementById('username-form');
+const avatarForm = document.getElementById('avatar-form');
 
 usernameForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -28,17 +31,24 @@ sendMessageForm.addEventListener('submit', (event) => {
 });
 
 socket.on('receive-message', (data) => {
-  console.log('RECEIVED:', data);
-  let timestamp = new Date().toLocaleTimeString();
-  let div = document.createElement('div');
-  let alias = data.username.toUpperCase();
-  div.textContent = timestamp + ' |    ' + alias + ':     ' + data.message;
-  messagesContainer.appendChild(div);
+  let message = new ChatMessage(data);
+  message.render(messagesContainer);
+  // div.textContent = timestamp + ' |    ' + alias + ':     ' + data.message;
+  // messagesContainer.appendChild(div);
 });
 
 socket.on('set-header', (data) => {
   let alias = data.username.toUpperCase();
   let header = document.getElementById('welcome');
   header.append('Welcome: ' + alias + '!');
+});
+
+avatarForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const avatarEl = document.getElementById('avatar-input');
+  const avatar = avatarEl.value;
+  socket.emit('submit-avatar', {avatar: avatar});
+
 });
 

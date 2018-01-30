@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -6,39 +8,34 @@ const faker = require('faker');
 
 app.use(express.static('./public'));
 
-const PLAYERS = {};
+const CHATMEMBERS = {};
 
 io.on('connection', (socket) => {
-  PLAYERS[socket.id] = {};
-  PLAYERS[socket.id].username = faker.fake('{{name.jobTitle}}');
-  console.log(PLAYERS[socket.id].username);
+  CHATMEMBERS[socket.id] = {};
+  CHATMEMBERS[socket.id].username = faker.fake('{{name.jobTitle}}');
+  CHATMEMBERS[socket.id].avatar = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/1859-Martinique.web.jpg/220px-1859-Martinique.web.jpg';
 
-  socket.emit('set-header', {username: PLAYERS[socket.id].username});
-
-
-  io.emit('playerdata', PLAYERS);
-
-  console.log('JOINED', PLAYERS[socket.id].username);
+  socket.emit('set-header', {username: CHATMEMBERS[socket.id].username});
 
   socket.on('disconnect', () => {
-    console.log('LEFT', socket.id);
-    delete PLAYERS[socket.id];
+    delete CHATMEMBERS[socket.id];
   });
 
   socket.on('send-message', (data) => {
-    data.username = PLAYERS[socket.id].username;
-    console.log('MESSAGE:', data.message);
+    data.timestamp = new Date().toLocaleTimeString();
+    data.username = CHATMEMBERS[socket.id].username;
+    data.avatar = CHATMEMBERS[socket.id].avatar;
     io.emit('receive-message', data);
   });
 
   socket.on('submit-username', (msg) => {
-    console.log(msg.username);
     if(msg.username === '')
       return;
-    console.log(PLAYERS);
-    PLAYERS[socket.id].username = msg.username;
-    io.emit('playerdata', PLAYERS);
-    console.log(PLAYERS);
+    CHATMEMBERS[socket.id].username = msg.username;
+  });
+
+  socket.on('submit-avatar', (data) => {
+    CHATMEMBERS[socket.id].avatar = data.avatar;
   });
 
 });
